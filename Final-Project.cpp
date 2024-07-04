@@ -6,7 +6,7 @@ using namespace std;
 class Video{
     public:
     int Video_ID;
-    string Movie Title;
+    string Movie_Title;
     string Genre;
     string Production;
     int Number_of_Copies;
