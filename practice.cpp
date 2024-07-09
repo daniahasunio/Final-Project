@@ -35,6 +35,7 @@ public:
             }
         }
         cout << "Video not available for rent." << endl;
+        
     }
 
     void returnVideo(int videoID) {
@@ -45,37 +46,38 @@ public:
                 return;
             }
         }
-        cout << "Video ID not found in the inventory." << endl;
+        cout << "Video not found." << endl;
     }
 
     void showVideoDetails(int videoID) {
-        for (const auto& video : videos) {
+        for (auto& video : videos) {
             if (video.videoID == videoID) {
                 cout << "Video ID: " << video.videoID << endl;
-                cout << "Title: " << video.movieTitle << endl;
+                cout << "Movie Title: " << video.movieTitle << endl;
                 cout << "Genre: " << video.genre << endl;
                 cout << "Production: " << video.production << endl;
                 cout << "Number of Copies: " << video.numCopies << endl;
-                cout << "Image Filename: " << video.movieImageFilename << endl;
+                cout << "Movie Image Filename: " << video.movieImageFilename << endl;
                 return;
             }
         }
-        cout << "Video ID not found." << endl;
+        cout << "Video not found." << endl;
     }
 
     void displayAllVideos() {
-        for (const auto& video : videos) {
+        for (auto& video : videos) {
             cout << "Video ID: " << video.videoID << endl;
-            cout << "Title: " << video.movieTitle << endl;
+            cout << "Movie Title: " << video.movieTitle << endl;
             cout << "Genre: " << video.genre << endl;
             cout << "Production: " << video.production << endl;
             cout << "Number of Copies: " << video.numCopies << endl;
-            cout << "Image Filename: " << video.movieImageFilename << endl;
+            cout << "Movie Image Filename: " << video.movieImageFilename << endl;
+            cout << endl;
         }
     }
 
     bool checkVideoAvailability(int videoID) {
-        for (const auto& video : videos) {
+        for (auto& video : videos) {
             if (video.videoID == videoID && video.numCopies > 0) {
                 return true;
             }
@@ -101,10 +103,7 @@ public:
     }
 
     void showCustomerDetails(int customerID) {
-        queue<Customer> temp = customers;
-        while (!temp.empty()) {
-            Customer customer = temp.front();
-            temp.pop();
+        for (auto& customer : customers) {
             if (customer.customerID == customerID) {
                 cout << "Customer ID: " << customer.customerID << endl;
                 cout << "Name: " << customer.name << endl;
@@ -112,23 +111,20 @@ public:
                 return;
             }
         }
-        cout << "Customer ID not found." << endl;
+        cout << "Customer not found." << endl;
     }
 
-    void printRentedVideos(int customerID, list<CustomerRent>& customerRents) {
-        for (const auto& rent : customerRents) {
-            if (rent.customerID == customerID) {
-                cout << "Rented videos for customer " << customerID << ":" << endl;
-                stack<int> rentedVideosCopy = rent.rentedVideos;
-                while (!rentedVideosCopy.empty()) {
-                    int videoID = rentedVideosCopy.top();
-                    rentedVideosCopy.pop();
-                    cout << "Video ID: " << videoID << endl;
-                }
+
+    void printRentedVideos(int customerID) {
+        for (auto& customer : customers) {
+            if (customer.customerID == customerID) {
+                cout << "Customer ID: " << customer.customerID << endl;
+                cout << "Name: " << customer.name << endl;
+                cout << "Address: " << customer.address << endl;
                 return;
             }
         }
-        cout << "No rented videos found for customer " << customerID << endl;
+        cout << "Customer not found." << endl;
     }
 };
 
@@ -147,65 +143,47 @@ public:
         for (auto& rent : customerRents) {
             if (rent.customerID == customerID) {
                 rent.rentedVideos.push(videoID);
+                cout << "Video rented successfully." << endl;
                 return;
             }
         }
-
         CustomerRent newRent;
         newRent.customerID = customerID;
         newRent.rentedVideos.push(videoID);
         customerRents.push_back(newRent);
+        cout << "Video rented successfully." << endl;
     }
 
     void returnVideo(int customerID, int videoID) {
         for (auto& rent : customerRents) {
             if (rent.customerID == customerID) {
-                stack<int> tempStack;
-                bool videoFound = false;
-
-                while (!rent.rentedVideos.empty()) {
-                    int topVideoID = rent.rentedVideos.top();
-                    rent.rentedVideos.pop();
-
-                    if (topVideoID == videoID && !videoFound) {
-                        videoFound = true;
-                    } else {
-                        tempStack.push(topVideoID);
+                stack<int>& rentedVideos = rent.rentedVideos;
+                while (!rentedVideos.empty()) {
+                    if (rentedVideos.top() == videoID) {
+                        rentedVideos.pop();
+                        cout << "Video returned successfully." << endl;
+                        return;
                     }
+                    rentedVideos.pop();
                 }
-
-                while (!tempStack.empty()) {
-                    rent.rentedVideos.push(tempStack.top());
-                    tempStack.pop();
-                }
-
-                if (videoFound) {
-                    cout << "Video " << videoID << " returned successfully by customer " << customerID << "." << endl;
-                } else {
-                    cout << "Video " << videoID << " not found in rented videos of customer " << customerID << "." << endl;
-                }
+                cout << "Video not found." << endl;
                 return;
             }
         }
-        cout << "Customer ID not found." << endl;
+        cout << "Customer not found." << endl;
     }
 
     void printAllRentedVideos() {
-        for (const auto& rent : customerRents) {
+        for (auto& rent : customerRents) {
             cout << "Customer ID: " << rent.customerID << endl;
-            cout << "Rented Videos:" << endl;
-            stack<int> rentedVideosCopy = rent.rentedVideos;
-            while (!rentedVideosCopy.empty()) {
-                int videoID = rentedVideosCopy.top();
-                rentedVideosCopy.pop();
-                cout << "Video ID: " << videoID << endl;
+            cout << "Rented Videos: ";
+            stack<int> rentedVideos = rent.rentedVideos;
+            while (!rentedVideos.empty()) {
+                cout << rentedVideos.top() << " ";
+                rentedVideos.pop();
             }
             cout << endl;
         }
-    }
-
-    list<CustomerRent>& getCustomerRents() {
-        return customerRents;
     }
 };
 
@@ -214,42 +192,46 @@ int main() {
     CustomerStore customerStore;
     CustomerRentStore customerRentStore;
 
-    // Sample code to test the functionality
-    Video video1 = {1, "Movie 1", "Action", "Production 1", 3, "movie1.jpg"};
-    Video video2 = {2, "Movie 2", "Comedy", "Production 2", 2, "movie2.jpg"};
-    Video video3 = {3, "Movie 3", "Drama", "Production 3", 1, "movie3.jpg"};
+    // Create some videos
+    Video video1 = {1, "Movie 1", "Action", "Production 1", 5, "movie1.jpg"};
+    Video video2 = {2, "Movie 2", "Comedy", "Production 2", 3, "movie2.jpg"};
+    Video video3 = {3, "Movie 3", "Drama", "Production 3", 2, "movie3.jpg"};
 
-    Customer customer1 = {1, "John Doe", "Address 1"};
-    Customer customer2 = {2, "Jane Smith", "Address 2"};
-
+    // Insert videos into the video store
     videoStore.insertVideo(video1);
     videoStore.insertVideo(video2);
     videoStore.insertVideo(video3);
 
+    // Create some customers
+    Customer customer1 = {1, "John Doe", "Address 1"};
+    Customer customer2 = {2, "Jane Smith", "Address 2"};
+
+    // Add customers to the customer store
     customerStore.addCustomer(customer1);
     customerStore.addCustomer(customer2);
 
-    if (videoStore.checkVideoAvailability(1)) {
-        videoStore.rentVideo(1);
-        customerRentStore.rentVideo(1, 1);
-    }
+    // Rent videos
+    customerRentStore.rentVideo(1, 1);
+    customerRentStore.rentVideo(1, 2);
+    customerRentStore.rentVideo(2, 3);
 
-    if (videoStore.checkVideoAvailability(2)) {
-        videoStore.rentVideo(2);
-        customerRentStore.rentVideo(1, 2);
-    }
-
-    if (videoStore.checkVideoAvailability(3)) {
-        videoStore.rentVideo(3);
-        customerRentStore.rentVideo(2, 3);
-    }
-
-    videoStore.returnVideo(1);
+    // Return videos
     customerRentStore.returnVideo(1, 1);
+    customerRentStore.returnVideo(2, 3);
 
+    // Display video details
+    videoStore.showVideoDetails(1);
+    videoStore.showVideoDetails(2);
+    videoStore.showVideoDetails(3);
+
+    // Display all videos
     videoStore.displayAllVideos();
+
+    // Display customer details
     customerStore.showCustomerDetails(1);
-    customerStore.printRentedVideos(1, customerRentStore.getCustomerRents());
+    customerStore.showCustomerDetails(2);
+
+    // Display rented videos
     customerRentStore.printAllRentedVideos();
 
     return 0;
