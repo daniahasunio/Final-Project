@@ -193,46 +193,83 @@ int main() {
     CustomerRentStore customerRentStore;
 
     // Create some videos
-    Video video1 = {1, "Movie 1", "Action", "Production 1", 5, "movie1.jpg"};
-    Video video2 = {2, "Movie 2", "Comedy", "Production 2", 3, "movie2.jpg"};
-    Video video3 = {3, "Movie 3", "Drama", "Production 3", 2, "movie3.jpg"};
+    int choice;
+    cout << "Enter your choice:" << endl;
+    cout << "1. Insert videos into the video store" << endl;
+    cout << "2. Add customers to the customer store" << endl;
+    cout << "3. Rent videos" << endl;
+    cout << "4. Return videos" << endl;
+    cout << "5. Display video details" << endl;
+    cout << "6. Display all videos" << endl;
+    cout << "7. Display customer details" << endl;
+    cout << "8. Display rented videos" << endl;
+    cin >> choice;
 
-    // Insert videos into the video store
-    videoStore.insertVideo(video1);
-    videoStore.insertVideo(video2);
-    videoStore.insertVideo(video3);
+    switch (choice) {
+        case 1: {
+            Video video1 = {1, "Movie 1", "Action", "Production 1", 5, "movie1.jpg"};
+            Video video2 = {2, "Movie 2", "Comedy", "Production 2", 3, "movie2.jpg"};
+            Video video3 = {3, "Movie 3", "Drama", "Production 3", 2, "movie3.jpg"};
 
-    // Create some customers
-    Customer customer1 = {1, "John Doe", "Address 1"};
-    Customer customer2 = {2, "Jane Smith", "Address 2"};
+            // Insert videos into the video store
+            videoStore.insertVideo(video1);
+            videoStore.insertVideo(video2);
+            videoStore.insertVideo(video3);
+            break;
+        }
+        case 2: {
+            Customer customer1 = {1, "John Doe", "Address 1"};
+            Customer customer2 = {2, "Jane Smith", "Address 2"};
 
-    // Add customers to the customer store
-    customerStore.addCustomer(customer1);
-    customerStore.addCustomer(customer2);
-
-    // Rent videos
-    customerRentStore.rentVideo(1, 1);
-    customerRentStore.rentVideo(1, 2);
-    customerRentStore.rentVideo(2, 3);
-
-    // Return videos
-    customerRentStore.returnVideo(1, 1);
-    customerRentStore.returnVideo(2, 3);
-
-    // Display video details
-    videoStore.showVideoDetails(1);
-    videoStore.showVideoDetails(2);
-    videoStore.showVideoDetails(3);
-
-    // Display all videos
-    videoStore.displayAllVideos();
-
-    // Display customer details
-    customerStore.showCustomerDetails(1);
-    customerStore.showCustomerDetails(2);
-
-    // Display rented videos
-    customerRentStore.printAllRentedVideos();
+            // Add customers to the customer store
+            customerStore.addCustomer(customer1);
+            customerStore.addCustomer(customer2);
+            break;
+        }
+        case 3: {
+            int customerID, videoID;
+            cout << "Enter customer ID: ";
+            cin >> customerID;
+            cout << "Enter video ID: ";
+            cin >> videoID;
+            customerRentStore.rentVideo(customerID, videoID);
+            break;
+        }
+        case 4: {
+            int customerID, videoID;
+            cout << "Enter customer ID: ";
+            cin >> customerID;
+            cout << "Enter video ID: ";
+            cin >> videoID;
+            customerRentStore.returnVideo(customerID, videoID);
+            break;
+        }
+        case 5: {
+            int videoID;
+            cout << "Enter video ID: ";
+            cin >> videoID;
+            videoStore.showVideoDetails(videoID);
+            break;
+        }
+        case 6: {
+            videoStore.displayAllVideos();
+            break;
+        }
+        case 7: {
+            int customerID;
+            cout << "Enter customer ID: ";
+            cin >> customerID;
+            customerStore.showCustomerDetails(customerID);
+            break;
+        }
+        case 8: {
+            customerRentStore.printAllRentedVideos();
+            break;
+        }
+        default:
+            cout << "Invalid choice." << endl;
+            break;
+    }
 
     return 0;
 }
