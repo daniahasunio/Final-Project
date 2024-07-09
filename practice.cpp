@@ -95,11 +95,11 @@ struct Customer {
 
 class CustomerStore {
 private:
-    queue<Customer> customers;
+    list<Customer> customers;
 
 public:
     void addCustomer(const Customer& customer) {
-        customers.push(customer);
+        customers.push_back(customer);
     }
 
     void showCustomerDetails(int customerID) {
