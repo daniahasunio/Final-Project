@@ -4,8 +4,7 @@
 #include <list>
 #include <queue>
 #include <stack>
-
-
+#include <limits> 
 
 using namespace std;
 
@@ -39,7 +38,6 @@ public:
         videos.push_back(video);
         cout << "Video inserted successfully." << endl;
     }
-
 
     void rentVideo(int videoID) {
         for (auto& video : videos) {
@@ -304,6 +302,20 @@ public:
     }
 };
 
+int getValidatedIntInput(const string& prompt) {
+    int value;
+    while (true) {
+        cout << prompt;
+        if (cin >> value) {
+            return value;
+        } else {
+            cout << "Invalid input. Please enter an integer." << endl;
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+        }
+    }
+}
+
 int main() {
     VideoStore videoStore;
     CustomerStore customerStore;
@@ -331,13 +343,12 @@ int main() {
         cout << "8. Display rented videos" << endl;
         cout << "9. Save data and exit" << endl;
         cout << "0. Exit without saving" << endl;
-        cin >> choice;
+        choice = getValidatedIntInput("Choice: ");
 
         switch (choice) {
         case 1: {
             Video video;
-            cout << "Enter Video ID: ";
-            cin >> video.videoID;
+            video.videoID = getValidatedIntInput("Enter Video ID: ");
             cout << "Enter Movie Title: ";
             cin.ignore();
             getline(cin, video.movieTitle);
@@ -345,15 +356,13 @@ int main() {
             getline(cin, video.genre);
             cout << "Enter Production: ";
             getline(cin, video.production);
-            cout << "Enter Number of Copies: ";
-            cin >> video.numCopies;
+            video.numCopies = getValidatedIntInput("Enter Number of Copies: ");
             videoStore.insertVideo(video);
             break;
         }
         case 2: {
             Customer customer;
-            cout << "Enter Customer ID: ";
-            cin >> customer.customerID;
+            customer.customerID = getValidatedIntInput("Enter Customer ID: ");
             cout << "Enter Name: ";
             cin.ignore();
             getline(cin, customer.name);
@@ -363,34 +372,25 @@ int main() {
             break;
         }
         case 3: {
-            int customerID, videoID;
-            cout << "Enter customer ID: ";
-            cin >> customerID;
-            cout << "Enter video ID: ";
-            cin >> videoID;
+            int customerID = getValidatedIntInput("Enter customer ID: ");
+            int videoID = getValidatedIntInput("Enter video ID: ");
             if (videoStore.checkVideoAvailability(videoID)) {
                 videoStore.rentVideo(videoID);
                 customerRentStore.rentVideo(customerID, videoID);
-            }
-            else {
+            } else {
                 cout << "Video not available for rent." << endl;
             }
             break;
         }
         case 4: {
-            int customerID, videoID;
-            cout << "Enter customer ID: ";
-            cin >> customerID;
-            cout << "Enter video ID: ";
-            cin >> videoID;
+            int customerID = getValidatedIntInput("Enter customer ID: ");
+            int videoID = getValidatedIntInput("Enter video ID: ");
             videoStore.returnVideo(videoID);
             customerRentStore.returnVideo(customerID, videoID);
             break;
         }
         case 5: {
-            int videoID;
-            cout << "Enter video ID: ";
-            cin >> videoID;
+            int videoID = getValidatedIntInput("Enter video ID: ");
             videoStore.showVideoDetails(videoID);
             break;
         }
@@ -399,9 +399,7 @@ int main() {
             break;
         }
         case 7: {
-            int customerID;
-            cout << "Enter customer ID: ";
-            cin >> customerID;
+            int customerID = getValidatedIntInput("Enter customer ID: ");
             customerStore.showCustomerDetails(customerID);
             break;
         }
