@@ -326,6 +326,63 @@ int main() {
     customerStore.loadFromFile("customers.txt");
     customerRentStore.loadFromFile("customer_rents.txt");
 
+	Video video1 = { 1, "Longlegs", "Horror", "C2 Motion picture Group", 10 };
+    Video video2 = { 2, "Immaculate", "Horror", "Black Bear Pictures", 10 };
+    Video video3 = { 3, "The First Omen", "Horror", "Phantom Four Films", 10 };
+    Video video4 = { 4, "MaXXXine", "Horror", "Motel Mojave", 10 };
+    Video video5 = { 5, "In A Violent Nature", "Horror", "Shudder Films", 10 };
+    
+    Video video6 = { 6, "The Tearsmith", "Romance", "Colorado Films", 10 };
+    Video video7 = { 7, "Upgraded", "Romance", "Amazon MGM Studios", 10 };
+    Video video8 = { 8, "The Idea of You", "Romance", "Welle Entertainment", 10 };
+    Video video9 = { 9, "Players", "Romance", "Mark Platt Productions", 10 };
+    Video video10 = { 10, "Love, Divided", "Romance", "Tripictures", 10 };
+    
+    Video video11 = { 11, "Spaceman", "Sci-Fi", "Tango Entertainment", 10 };
+    Video video12 = { 12, "Atlas", "Sci-Fi", "ASAP Entertainmentt", 10 };
+    Video video13 = { 13, "Ghostbusters: Frozen Empire", "Sci-Fi", "Columbia Pictures", 10 };
+    Video video14 = { 14, "Dune: Part Two", "Sci-Fi", "Legendary Pictures", 10 };
+    Video video15 = { 15, "Ultraman: Rising", "Sci-Fi", "Netflix Animation", 10 };
+         
+    Video video16 = { 16, "Furiosa: A Mad Max Saga", "Action", "Domain Entertainment", 10 };
+    Video video17 = { 17, "The Beekeeper", "Action", "Miramax", 10 };
+    Video video18 = { 18, "Damsel", "Action", "Roth Films", 10 };
+    Video video19 = { 19, "Roadhouse", "Action", "Silver Pictures", 10 };
+    Video video20 = { 20, "Argylle", "Action", "Apple Original Films", 10 };
+    
+    Video video21 = { 21, "IF", "Comedy", "Sunday Night Productions", 10 };
+    Video video22 = { 22, "Ricky Stanicky", "Comedy", "Footloose Production", 10 };
+    Video video23 = { 23, "The Fall Guy", "Comedy", "87 North Productions", 10 };
+    Video video24 = { 24, "Lift", "Comedy", "Hartbeat", 10 };
+    Video video25 = { 25, "The Garfield Movie", "Comedy", "Columbia Pictures", 10 };
+     
+
+    videoStore.insertVideo(video1);
+    videoStore.insertVideo(video2);
+    videoStore.insertVideo(video3);
+    videoStore.insertVideo(video4);
+    videoStore.insertVideo(video5);
+    videoStore.insertVideo(video6);
+    videoStore.insertVideo(video7);
+    videoStore.insertVideo(video8);
+    videoStore.insertVideo(video9);
+    videoStore.insertVideo(video10);
+    videoStore.insertVideo(video11;
+    videoStore.insertVideo(video12);
+    videoStore.insertVideo(video13);
+    videoStore.insertVideo(video14);
+    videoStore.insertVideo(video15);
+    videoStore.insertVideo(video16);
+    videoStore.insertVideo(video17);
+    videoStore.insertVideo(video18);
+    videoStore.insertVideo(video19);
+    videoStore.insertVideo(video20);
+    videoStore.insertVideo(video21);
+    videoStore.insertVideo(video22);
+    videoStore.insertVideo(video23);
+    videoStore.insertVideo(video24);
+    videoStore.insertVideo(video25);
+
     int choice;
 	cout << "==============================================" << endl;
 	cout << "    QUEUETI PIE: Video Rental System   "<< endl;
