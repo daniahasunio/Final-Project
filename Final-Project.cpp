@@ -321,11 +321,11 @@ int main() {
     CustomerStore customerStore;
     CustomerRentStore customerRentStore;
 
-    // Load data from files
+	//load files
     videoStore.loadFromFile("videos.txt");
     customerStore.loadFromFile("customers.txt");
     customerRentStore.loadFromFile("customer_rents.txt");
-
+	
     int choice;
 	cout << "==============================================" << endl;
 	cout << "    QUEUETI PIE: Video Rental System   "<< endl;
