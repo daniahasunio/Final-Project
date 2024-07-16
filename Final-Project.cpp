@@ -315,6 +315,10 @@ int main() {
     customerRentStore.loadFromFile("customer_rents.txt");
 
     int choice;
+	cout << "==============================================" << endl;
+	cout << "    QUEUETI PIE: Video Rental System   "<< endl;
+	cout << "==============================================" << endl;
+
     do {
         cout << "Enter your choice:" << endl;
         cout << "1. Insert videos into the video store" << endl;
